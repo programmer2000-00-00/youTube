@@ -1,4 +1,4 @@
-package com.example.youTube.exception;
+package com.example.exception;
 
 public class ItemNotFoundException extends RuntimeException{
     public ItemNotFoundException(String message) {

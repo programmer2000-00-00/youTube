@@ -1,4 +1,4 @@
-package com.example.youTube.config;
+package com.example.config;
 
 public class SecurityConfig {
     public  Integer add(){
