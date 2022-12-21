@@ -6,4 +6,9 @@ public class SecurityConfig {
         System.out.println("Gitingzg katta mazgii");
         return  null;
     }
+    public  void addd(){
+
+        System.out.println("Gitingzg katta mazgii");
+
+    }
 }
