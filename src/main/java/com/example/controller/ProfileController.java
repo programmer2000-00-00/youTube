@@ -4,4 +4,8 @@ public class ProfileController {
     public void add(){
         //sdcvusvhdc
     }
+
+    public void addd(){
+        //sdcvusvhdc
+    }
 }
