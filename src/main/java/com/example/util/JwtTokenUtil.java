@@ -38,4 +38,18 @@ public class JwtTokenUtil {
 
         return new JwtDTO(username, profileRole);
     }
+    public static String encode(Integer profileId) {
+        JwtBuilder jwtBuilder = Jwts.builder();
+        jwtBuilder.setIssuedAt(new Date());
+        jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey);
+
+        jwtBuilder.claim("id", profileId);
+        int tokenLiveTime = 1000 * 3600 * 1;
+        jwtBuilder.setExpiration(new Date(System.currentTimeMillis() + (tokenLiveTime)));
+        jwtBuilder.setIssuer("Mazgi");
+
+        return jwtBuilder.compact();
+    }
+
+
 }

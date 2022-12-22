@@ -34,4 +34,6 @@ public class ProfileEntity {
     @Enumerated(value = EnumType.STRING)
     @Column
     private ProfileRole role;
+    @Column
+    private Integer prtId;
 }

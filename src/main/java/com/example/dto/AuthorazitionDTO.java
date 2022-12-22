@@ -1,0 +1,24 @@
+package com.example.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class AuthorazitionDTO {
+    private Integer id;
+    private String email;
+
+    public AuthorazitionDTO(Integer id, String email) {
+        this.id = id;
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "AuthorazitionDTO{" +
+                "id=" + id +
+                ", phone='" + email + '\'' +
+                '}';
+    }
+}
