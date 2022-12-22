@@ -13,9 +13,9 @@ public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private ProfileRepository profileRepository;
     @Override
-    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        ProfileEntity byPhone = profileRepository.findByPhone(phone);
+        ProfileEntity byPhone = profileRepository.findByEmail(email);
         if(byPhone==null) {
             throw new UsernameNotFoundException("Bad Creatensioanal");
         }
