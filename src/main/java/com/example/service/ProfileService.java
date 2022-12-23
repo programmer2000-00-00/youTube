@@ -53,7 +53,7 @@ public class ProfileService {
         return profileRepository.getNameAndSurnameById(profileId);
     }
 
-    public String updateProfilePasswordDetail(String name, String surname, String email) {
+    public String updateProfilePasswordDetail(String name, String surname,String email) {
         int result = profileRepository.updateProfilePasswordDetail(name,surname, email);
         if (result==1)
             return "Done";
