@@ -5,6 +5,7 @@ import com.example.enums.ProfileRole;
 import com.example.enums.ProfileStatus;
 import com.example.exception.ItemAlreadyExistsException;
 import com.example.repository.ProfileRepository;
+import com.example.util.MD5Util1;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class PostConstructorBean {
         entity.setName("Javlonbek");
         entity.setSurname("Shobo'tayev");
         entity.setEmail("jshobotayev@gmail.com");
-        entity.setPassword("3433");
+        entity.setPassword(MD5Util1.encode("3433"));
         entity.setRole(ProfileRole.ROLE_ADMIN);
         entity.setStatus(ProfileStatus.ACTIVE);
         profileRepository.save(entity);

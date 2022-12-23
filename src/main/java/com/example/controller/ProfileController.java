@@ -38,10 +38,8 @@ public class ProfileController {
         return  profileService.updateProfilePassword(authDTO.getEmail(), authDTO.getPassword());
     }
     @PostMapping("/admin/create")
-    public HttpStatus createProfileByAdmin(HttpServletRequest request,
-                                           @RequestBody ProfileDTO dto){
-        String email = JwtTokenUtil.getIdFromHeader(request, ProfileRole.ROLE_ADMIN);
-        int result =  profileService.createProfile(email,dto);
+    public HttpStatus createProfileByAdmin(@RequestBody ProfileDTO dto){
+        int result =  profileService.createProfile(dto.getEmail(), dto);
         return result==1?HttpStatus.CREATED:HttpStatus.I_AM_A_TEAPOT;
     }
     @GetMapping("/info/{id}")
@@ -62,10 +60,6 @@ public class ProfileController {
     public ResponseEntity<UpdateProfileNameAndEmail> updateDetail(@PathVariable Integer profileId) {
         UpdateProfileNameAndEmail profile = profileService.updateNameSurname(profileId);
         return ResponseEntity.ok(profile);
-    }
-
-    public void addd(){
-        //sdcvusvhdc
     }
 
     @PutMapping("/update/password/detail/result")

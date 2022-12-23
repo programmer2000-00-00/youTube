@@ -34,10 +34,10 @@ public class ProfileDTO {
     private String email;
     private String password;
     private ProfileRole role;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdDate = LocalDateTime.now();
     private LocalDateTime updateDate;
-    private String imageId;
-    private String imagePath;
+//    private String imageId;
+//    private String imagePath;
     private ProfileStatus status;
     private Integer prtId;
 

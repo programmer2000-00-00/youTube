@@ -45,7 +45,7 @@ public class JwtTokenUtil {
 
         Claims claims = jws.getBody();
 
-        String username = (String) claims.get("username");
+        String username = (String) claims.get("email");
 
         String role = (String) claims.get("role");
         ProfileRole profileRole = ProfileRole.valueOf(role);
