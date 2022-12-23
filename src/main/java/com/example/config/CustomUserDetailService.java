@@ -10,16 +10,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
+
     @Autowired
     private ProfileRepository profileRepository;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        ProfileEntity byPhone = profileRepository.findByEmail(email);
-        if(byPhone==null) {
-            throw new UsernameNotFoundException("Bad Creatensioanal");
+        // username -> alish
+        ProfileEntity optional = profileRepository.findByEmail(email);
+        if (optional == null) {
+            throw new UsernameNotFoundException("Bad Cretetional");
         }
-        return new CustomUserDetails(byPhone);
-    }
 
+        return new CustomUserDetails(optional);
+    }
 }

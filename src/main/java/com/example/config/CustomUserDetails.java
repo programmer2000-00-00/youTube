@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
-
     private ProfileEntity profile;
 
     public CustomUserDetails(ProfileEntity profile) {
@@ -19,19 +18,23 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority>list=new LinkedList<>();
+        System.out.println("get Role");
+
+        List<GrantedAuthority> list = new LinkedList<>();
         list.add(new SimpleGrantedAuthority(profile.getRole().name()));
+
         return list;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        System.out.println("get Password");
+        return profile.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return profile.getEmail();
     }
 
     @Override
@@ -51,12 +54,13 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
+        System.out.println("get  isEnabled");
+
+        // status
         return true;
     }
 
     public ProfileEntity getProfile() {
         return profile;
     }
-
-
 }

@@ -11,10 +11,11 @@ import com.example.repository.ProfileCustomRepository;
 import com.example.repository.ProfileRepository;
 import com.example.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
