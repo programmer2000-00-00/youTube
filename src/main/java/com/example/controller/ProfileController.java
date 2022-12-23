@@ -8,6 +8,7 @@ import com.example.enums.ProfileStatus;
 import com.example.mapper.UpdateProfileNameAndEmail;
 import com.example.service.ProfileService;
 import com.example.util.JwtTokenUtil;
+import com.example.util.SpringSecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,14 +49,14 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.getMyInfo(id));
     }
 
-    @GetMapping("/update/password/{profileId}")
-    public ResponseEntity<AuthDTO> updatePassword(@PathVariable Integer profileId) {
-        AuthDTO profile = profileService.forUpdateDTO(profileId);
+    @GetMapping("/update/password/")
+    public ResponseEntity<AuthDTO> updatePassword() {
+        AuthDTO profile = profileService.forUpdateDTO(SpringSecurityUtil.getCurrentUserId());
         return ResponseEntity.ok(profile);
     }
     @PutMapping("/update/password/result")
     public String updateProfilePassword(@RequestBody AuthDTO profileDTO){
-        return  profileService.updateProfilePassword(profileDTO.getEmail(), profileDTO.getPassword());
+        return  profileService.updateProfilePassword(SpringSecurityUtil.getCurrentEntity().getEmail(), profileDTO.getPassword());
     }
     @GetMapping("/update/password/detail/{profileId}")
     public ResponseEntity<UpdateProfileNameAndEmail> updateDetail(@PathVariable Integer profileId) {
