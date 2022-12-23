@@ -63,10 +63,6 @@ public class ProfileController {
         return ResponseEntity.ok(profile);
     }
 
-    public void addd(){
-        //sdcvusvhdc
-    }
-
     @PutMapping("/update/password/detail/result")
     public String updateProfilePasswordDetail(HttpServletRequest request,
             @RequestBody UpdateProfileNameAndEmail profileDTO){
