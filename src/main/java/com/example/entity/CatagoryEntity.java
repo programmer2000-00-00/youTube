@@ -21,6 +21,8 @@ public class CatagoryEntity {
     @Column
     private String name;
     @Column
+    private Integer prtId;
+    @Column
     private LocalDateTime createdDate;
 
 }
