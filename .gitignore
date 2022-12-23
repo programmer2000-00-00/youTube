@@ -31,6 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Securt ###
-**/talablar.txt
+/src/main/resources/application-local.properties

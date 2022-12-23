@@ -29,7 +29,7 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>
     @Query("select new com.example.dto.auth.AuthDTO(p.password,p.email) from ProfileEntity p where  p.id=?1")
     Optional<AuthDTO>findByIdEmailAndPassword(Integer id);
 
-    @Query("select new com.example.dto.ProfileDTO(p.id,p.name,p.surname,p.email,p.password,p.image.path) from ProfileEntity p where  p.id=?1")
+    @Query("select new com.example.dto.ProfileDTO(p.id,p.name,p.surname,p.email,p.password) from ProfileEntity p where  p.id=?1")
     Optional<ProfileDTO> getMyInfo(Integer id);
 
     @Query("select new com.example.mapper.UpdateProfileNameAndEmail(p.name,p.surname) from ProfileEntity p where  p.id=?1")
