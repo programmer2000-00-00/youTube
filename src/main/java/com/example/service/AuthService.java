@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.AuthResponseDTO;
 import com.example.dto.auth.AuthDTO;
 import com.example.dto.RegistrDTO;
 import com.example.entity.EmailEntity;
@@ -11,12 +12,11 @@ import com.example.exception.*;
 import com.example.repository.EmailRepository;
 import com.example.repository.ProfileRepository;
 import com.example.util.JwtTokenUtil;
+import com.example.util.MD5Util1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -131,7 +131,7 @@ public class AuthService {
 
     public AuthResponseDTO login(AuthDTO dto, Language language) {
 
-        ProfileEntity profile = profileRepository.findByEmailAndPassword(dto.getEmail(), MD5Util.encode(dto.getPassword()));
+        ProfileEntity profile = profileRepository.findByEmailAndPassword(dto.getEmail(), MD5Util1.encode(dto.getPassword()));
 
         if (profile == null) {
             throw new ItemNotFoundException(resourceService.getMessage("credential.wrong", language.name()));

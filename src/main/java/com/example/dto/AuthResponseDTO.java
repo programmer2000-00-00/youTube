@@ -1,4 +1,4 @@
-package com.example.dto.auth;
+package com.example.dto;
 
 import com.example.enums.ProfileRole;
 import jakarta.validation.constraints.Size;

@@ -1,6 +1,6 @@
 package com.example.util;
 
-public class MD5Util {
+public class MD5Util1 {
     public static String encode(String password) {
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
