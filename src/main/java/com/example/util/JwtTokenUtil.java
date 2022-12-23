@@ -72,8 +72,8 @@ public class JwtTokenUtil {
             throw new TokenNotValidException("Not Authorized");
         }
     }
-    public static Integer getIdFromHeader(HttpServletRequest request,ProfileRole role){
-        Integer id= (Integer) request.getAttribute("id");
+    public static String getIdFromHeader(HttpServletRequest request,ProfileRole role){
+        String id= (String) request.getAttribute("email");
         ProfileRole jwtRole= (ProfileRole) request.getAttribute("role");
 
         if (!role.equals(jwtRole)) {

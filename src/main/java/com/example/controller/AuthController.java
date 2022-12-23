@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.dto.auth.AuthDTO;
-import com.example.dto.auth.AuthResponseDTO;
 import com.example.dto.RegistrDTO;
 import com.example.enums.Language;
 import com.example.service.AuthService;

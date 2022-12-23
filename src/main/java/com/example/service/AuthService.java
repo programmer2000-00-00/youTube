@@ -1,7 +1,6 @@
 package com.example.service;
 
 import com.example.dto.auth.AuthDTO;
-import com.example.dto.auth.AuthResponseDTO;
 import com.example.dto.RegistrDTO;
 import com.example.entity.EmailEntity;
 import com.example.entity.ProfileEntity;
@@ -12,7 +11,6 @@ import com.example.exception.*;
 import com.example.repository.EmailRepository;
 import com.example.repository.ProfileRepository;
 import com.example.util.JwtTokenUtil;
-import com.example.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

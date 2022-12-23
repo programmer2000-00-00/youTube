@@ -52,14 +52,15 @@ public class ProfileService {
         return profileRepository.getNameAndSurnameById(profileId);
     }
 
-    public String updateProfilePasswordDetail(String name, String surname, Integer id) {
-        int result = profileRepository.updateProfilePasswordDetail(name,surname, id);
+    public String updateProfilePasswordDetail(String name, String surname, String email) {
+        int result = profileRepository.updateProfilePasswordDetail(name,surname, email);
         if (result==1)
             return "Done";
         return "Wrong";
     }
 
-    public int createProfile(Integer id, ProfileDTO dto) {
+    public int createProfile(String email, ProfileDTO dto) {
+        ProfileEntity byEmail = profileRepository.findByEmail(email);
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
@@ -67,7 +68,7 @@ public class ProfileService {
         entity.setPassword(dto.getPassword());
         entity.setRole(dto.getRole());
         entity.setStatus(ProfileStatus.ACTIVE);
-        entity.setPrtId(id);
+        entity.setPrtId(byEmail.getId());
         ProfileEntity save = profileRepository.save(entity);
 
         return 1;

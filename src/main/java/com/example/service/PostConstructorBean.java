@@ -5,7 +5,6 @@ import com.example.enums.ProfileRole;
 import com.example.enums.ProfileStatus;
 import com.example.exception.ItemAlreadyExistsException;
 import com.example.repository.ProfileRepository;
-import com.example.util.MD5Util;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

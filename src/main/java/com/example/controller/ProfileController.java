@@ -39,8 +39,8 @@ public class ProfileController {
     @PostMapping("/admin/create")
     public HttpStatus createProfileByAdmin(HttpServletRequest request,
                                            @RequestBody ProfileDTO dto){
-        Integer id = JwtTokenUtil.getIdFromHeader(request, ProfileRole.ROLE_ADMIN);
-        int result =  profileService.createProfile(id,dto);
+        String email = JwtTokenUtil.getIdFromHeader(request, ProfileRole.ROLE_ADMIN);
+        int result =  profileService.createProfile(email,dto);
         return result==1?HttpStatus.CREATED:HttpStatus.I_AM_A_TEAPOT;
     }
     @GetMapping("/info/{id}")

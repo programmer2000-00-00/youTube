@@ -36,6 +36,6 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>
     UpdateProfileNameAndEmail getNameAndSurnameById(Integer profileId);
     @Transactional
     @Modifying
-    @Query("UPDATE ProfileEntity as p set p.name=?1, p.surname=?2 where p.id=?3")
-    int updateProfilePasswordDetail(String name, String surname,Integer id);
+    @Query("UPDATE ProfileEntity as p set p.name=?1, p.surname=?2 where p.email=?3")
+    int updateProfilePasswordDetail(String name, String surname,String email);
 }
