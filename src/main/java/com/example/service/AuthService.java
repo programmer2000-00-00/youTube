@@ -1,19 +1,25 @@
 package com.example.service;
 
+import com.example.dto.auth.AuthDTO;
+import com.example.dto.auth.AuthResponseDTO;
 import com.example.dto.RegistrDTO;
 import com.example.entity.EmailEntity;
 import com.example.entity.ProfileEntity;
+import com.example.enums.Language;
 import com.example.enums.ProfileRole;
 import com.example.enums.ProfileStatus;
-import com.example.exception.AppBadRequestException;
-import com.example.exception.PhoneAlreadyExistsException;
+import com.example.exception.*;
 import com.example.repository.EmailRepository;
 import com.example.repository.ProfileRepository;
 import com.example.util.JwtTokenUtil;
+import com.example.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class AuthService {
@@ -23,16 +29,55 @@ public class AuthService {
     private EmailService emailService;
     @Autowired
     ProfileRepository profileRepository;
+    @Autowired
+    private ResourceBundleService resourceService;
 
-    public String registration(RegistrDTO registrDTO) {
-        check(registrDTO);
+    public String update(AuthDTO registrDTO) {
 
         ProfileEntity byEmail = profileRepository.findByEmail(registrDTO.getEmail());
         if (byEmail!= null) {
             if (byEmail.getStatus().equals(ProfileStatus.NOT_ACTIVE)) {
                 profileRepository.delete(byEmail);
             } else {
-                throw new PhoneAlreadyExistsException("this number exists");
+                AuthDTO update = new AuthDTO();
+                update.setEmail(registrDTO.getEmail());
+                update.setPassword(registrDTO.getPassword());
+                profileRepository.updateProfilePassword(update.getPassword(),update.getEmail());
+
+                StringBuilder sb = new StringBuilder();
+                sb.append("<h1 style=\\\"text-align: center\\\">Salom Qalaysan</h1>");
+                String link = String.format("<a href=\"http://192.168.59.235/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(byEmail.getEmail()));
+                sb.append(link);
+                emailService.sendEmailMine(registrDTO.getEmail(), "Complite Registration", sb.toString());
+                EmailEntity email=new EmailEntity();
+                email.setMessage("Salom Qalaysan");
+                email.setEmail(update.getEmail());
+                email.setCreatedDate(LocalDateTime.now());
+                emailRepository.save(email);
+            }
+        }
+
+
+
+//        Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        };
+//        Thread thread = new Thread(runn\able);
+//        thread.start();
+        return "Emailga link ketdi aka tekwiring qani";
+
+    }
+    public String registration(RegistrDTO registrDTO) {
+        check(registrDTO);
+        ProfileEntity byEmail = profileRepository.findByEmail(registrDTO.getEmail());
+        if (byEmail!= null) {
+            if (byEmail
+                    .getStatus().equals(ProfileStatus.NOT_ACTIVE)) {
+                profileRepository.delete(byEmail);
+            } else {
+                throw new PhoneAlreadyExistsException("this email already exists");
             }
         }
 
@@ -48,7 +93,8 @@ public class AuthService {
 
         StringBuilder sb = new StringBuilder();
         sb.append("<h1 style=\\\"text-align: center\\\">Salom Qalaysan</h1>");
-        String link = String.format("<a href=\"http://192.168.59.235/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(byEmail.getId()));
+        String link = String.format("<a href=\"http://192.168.59.235/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(byEmail
+                .getEmail()));
         sb.append(link);
         emailService.sendEmailMine(registrDTO.getEmail(), "Complite Registration", sb.toString());
         EmailEntity email=new EmailEntity();
@@ -82,6 +128,37 @@ public class AuthService {
         if(registrDTO.getMainPhotoId()==null||registrDTO.getMainPhotoId().trim().length()<3){
             throw new AppBadRequestException("password is wrong");
         }
+
+    }
+
+    public AuthResponseDTO login(AuthDTO dto, Language language) {
+
+        ProfileEntity profile = profileRepository.findByEmailAndPassword(dto.getEmail(), MD5Util.encode(dto.getPassword()));
+
+        if (profile == null) {
+            throw new ItemNotFoundException(resourceService.getMessage("credential.wrong", language.name()));
+        }
+
+        if (!profile.getStatus().equals(ProfileStatus.ACTIVE)) {
+            throw new AppForbiddenException("No access");
+        }
+
+        return toResponseDTO(profile);
+    }
+
+    private AuthResponseDTO toResponseDTO(ProfileEntity profile) {
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+        authResponseDTO.setName(profile.getName());
+        authResponseDTO.setSurname(profile.getSurname());
+        authResponseDTO.setRole(profile.getRole());
+        authResponseDTO.setToken(JwtTokenUtil.encode(profile.getEmail(), profile.getRole()));
+        return authResponseDTO;
+    }
+    public int rand() {
+        Random rand = new Random(); //instance of random class
+        int upperbound = 9999;
+        //generate random values from 0-24
+        return rand.nextInt(upperbound);
 
     }
 }

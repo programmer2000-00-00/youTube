@@ -15,16 +15,16 @@ public class ProfileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 20)
+    @Column(length = 50)
     private  String name;
 
-    @Column(length = 20)
+    @Column(length = 50)
     private  String surname;
 
-    @Column(length = 20,unique = true)
+    @Column(length = 50,unique = true)
     private  String email;
 //id,name,surname,email,photo,role,status
-    @Column
+    @Column(length = 200)
     private  String password;
 
     @Enumerated(value = EnumType.STRING)

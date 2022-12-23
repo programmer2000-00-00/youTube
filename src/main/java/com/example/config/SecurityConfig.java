@@ -27,9 +27,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        System.out.println("Mazgimento");
         http.authorizeHttpRequests()
                 .anyRequest()
                 .authenticated()
+                .requestMatchers("/auth/**").permitAll()
                 .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
