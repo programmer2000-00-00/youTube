@@ -12,4 +12,5 @@ public class RegistrDTO {
     private String email;
     private String mainPhotoId;
     private AttachDTO mainPhoto;
+    private  String password;
 }

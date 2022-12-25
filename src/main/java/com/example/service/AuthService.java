@@ -46,7 +46,7 @@ public class AuthService {
                 sb.append("<h1 style=\\\"text-align: center\\\">Salom Qalaysan</h1>");
                 String link = String.format("<a href=\"http://192.168.59.235/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(byEmail.getEmail()));
                 sb.append(link);
-                emailService.sendEmailMine(registrDTO.getEmail(), "Complite Registration", sb.toString());
+                emailService.sendEmailMime(registrDTO.getEmail(), "Complite Registration", sb.toString());
                 EmailEntity email=new EmailEntity();
                 email.setMessage("Salom Qalaysan");
                 email.setEmail(update.getEmail());
@@ -69,11 +69,10 @@ public class AuthService {
     }
     public String registration(RegistrDTO registrDTO) {
         check(registrDTO);
-        ProfileEntity byEmail = profileRepository.findByEmail(registrDTO.getEmail());
-        if (byEmail!= null) {
-            if (byEmail
-                    .getStatus().equals(ProfileStatus.NOT_ACTIVE)) {
-                profileRepository.delete(byEmail);
+        ProfileEntity entity = profileRepository.findByEmail(registrDTO.getEmail());
+        if (entity!= null) {
+            if (entity.getStatus().equals(ProfileStatus.NOT_ACTIVE)) {
+                profileRepository.delete(entity);
             } else {
                 throw new PhoneAlreadyExistsException("this email already exists");
             }
@@ -86,15 +85,14 @@ public class AuthService {
         profileEntity.setStatus(ProfileStatus.NOT_ACTIVE);
         profileEntity.setRole(ProfileRole.ROLE_USER);
         profileEntity.setEmail(registrDTO.getEmail());
-
+        profileEntity.setPassword(MD5Util1.encode(registrDTO.getPassword()));
         profileRepository.save(profileEntity);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("<h1 style=\\\"text-align: center\\\">Salom Qalaysan</h1>");
-        String link = String.format("<a href=\"http://192.168.59.235/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(byEmail
-                .getEmail()));
+        sb.append("<h1 style=\\\"text-align: center\\\">Click there for Registration</h1>");
+        String link = String.format("<a href=\"http://192.168.0.116:8080/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(entity.getEmail()));
         sb.append(link);
-        emailService.sendEmailMine(registrDTO.getEmail(), "Complite Registration", sb.toString());
+        emailService.sendEmailMime(registrDTO.getEmail(), "Complite Registration", sb.toString());
         EmailEntity email=new EmailEntity();
         email.setMessage("Salom Qalaysan");
         email.setEmail(profileEntity.getEmail());

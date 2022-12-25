@@ -4,6 +4,7 @@ import com.example.dto.EmailDTO;
 import com.example.entity.EmailEntity;
 import com.example.exception.ItemNotFoundException;
 import com.example.repository.EmailRepository;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,23 +40,28 @@ public class EmailService {
         javaMailSender.send(msg);
     }
 
-     void  sendEmailMine(String toAccount, String subject, String text) {
+    void sendEmailMime(String toAccount, String subject, String content) {
         try {
-            System.out.println("keld");
-            MimeMessage msg = javaMailSender.createMimeMessage();
-            msg.setFrom(fromAccount);
-            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            mimeMessage.setFrom(fromAccount);
+
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setTo(toAccount);
             helper.setSubject(subject);
-            helper.setFrom("gulomurolov59@gmail.com");
-            helper.setText(text, true);
-            javaMailSender.send(msg);
+            helper.setText(content);
+            helper.setText(content, true);
+            javaMailSender.send(mimeMessage);
 
-        } catch (jakarta.mail.MessagingException e) {
+            /*EmailHistory emailHistory = new EmailHistory();
+            emailHistory.setEmail(toAccount);
+            emailHistory.setMessage(content);
+            emailHistory.setCreatedDate(LocalDateTime.now());
+
+            emailRepository.save(emailHistory);*/
+        } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
-
 
 //    public List<EmailDTO> getByEmail(String email) {
 //        List<EmailEntity> byEmail = emailRepositiry.findByEmail(email);
@@ -76,18 +82,18 @@ public class EmailService {
 //        return ToDTO(byData);
 //
 //    }
-    public List<EmailDTO>ToDTO(List<EmailEntity>emailEntities){
-        List<EmailDTO> emailDTOList=new ArrayList<>();
-        for (EmailEntity emailEntity : emailEntities) {
-            EmailDTO dto=new EmailDTO();
-            dto.setId(emailEntity.getId());
-            dto.setEmail(emailEntity.getEmail());
-            dto.setMessage(emailEntity.getMessage());
-            dto.setCreatedDate(emailEntity.getCreatedDate());
-            emailDTOList.add(dto);
+        public List<EmailDTO> ToDTO (List < EmailEntity > emailEntities) {
+            List<EmailDTO> emailDTOList = new ArrayList<>();
+            for (EmailEntity emailEntity : emailEntities) {
+                EmailDTO dto = new EmailDTO();
+                dto.setId(emailEntity.getId());
+                dto.setEmail(emailEntity.getEmail());
+                dto.setMessage(emailEntity.getMessage());
+                dto.setCreatedDate(emailEntity.getCreatedDate());
+                emailDTOList.add(dto);
+            }
+            return emailDTOList;
         }
-        return emailDTOList;
-    }
 //
 //    public Page<EmailDTO> getByPage(Integer page, Integer size) {
 //
@@ -104,7 +110,6 @@ public class EmailService {
 //            dtoList.add(dto);
 //        }
 //        return new PageImpl<>(dtoList,pageable,totalElement);
-
 
 
 

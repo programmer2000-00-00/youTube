@@ -32,39 +32,37 @@ public class AttachService {
     private AttachRepository attachRepository;
      public AttachDTO createAttach(MultipartFile file){
          try {
-             // attaches/2022/04/23/UUID.png
-             String attachPath = getYmDString(); // 2022/04/23
-             String extension = getExtension(file.getOriginalFilename()); // .png....
+
+             String attachPath = getYmDString();
+             String extension = getExtension(file.getOriginalFilename());
              String uuid = UUID.randomUUID().toString();
              String fileName = uuid + "." + extension; // UUID.png
 
-             File folder = new File(attachFolder + attachPath);  // attaches/2022/04/23/
+             File folder = new File(attachFolder + attachPath);
              if (!folder.exists()) {
                  folder.mkdirs();
              }
 
              byte[] bytes = file.getBytes();
 
-             Path path = Paths.get(attachFolder + attachPath + "/" + fileName); // attaches/2022/04/23/UUID.png
+             Path path = Paths.get(attachFolder + attachPath + "/" + fileName);
              Files.write(path, bytes);
 
              AttachEntity entity = new AttachEntity();
-             entity.setPath(attachPath);
-             entity.setExtension(extension);
-             entity.setSize(file.getSize());
-             entity.setOriginalName(file.getOriginalFilename());
-             entity.setCreatedData(LocalDateTime.now());
              entity.setId(uuid);
+             entity.setOriginalName(file.getOriginalFilename());
+             entity.setPath(attachPath);
+             entity.setSize(file.getSize());
+             entity.setExtension(extension);
+             entity.setCreatedData(LocalDateTime.now());
              attachRepository.save(entity);
 
              AttachDTO attachDTO = toDTO(entity);
-             attachDTO.setOriginalName(file.getOriginalFilename());
              attachDTO.setUrl(attachOpenUrl + fileName);
-
-
-             return attachDTO;
+              return attachDTO;
          } catch (IOException e) {
              e.printStackTrace();
+             System.out.println(e.getMessage());
          }
          return null;
      }

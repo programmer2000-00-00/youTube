@@ -8,7 +8,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class AuthDTO {
     @Size(min = 3, max = 50)
     private String password;
@@ -18,5 +17,8 @@ public class AuthDTO {
     public AuthDTO(String password, String email) {
         this.password = password;
         this.email = email;
+    }
+
+    public AuthDTO() {
     }
 }
