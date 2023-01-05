@@ -33,5 +33,9 @@ public class PlaylistEntity {
     private PlaylistStatus status;
     @Column
     private Integer orderNumber;
-
+    @Column(name = "attach_id")
+    private  String attachId;
+    @OneToOne
+    @JoinColumn(name = "attach_id", updatable = false, insertable = false)
+    private AttachEntity attach;
 }

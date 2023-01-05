@@ -30,6 +30,7 @@ public class SecurityConfig {
         http.csrf().disable().cors().disable();
         http.authorizeHttpRequests()
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/attach/upload").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
