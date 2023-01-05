@@ -18,9 +18,9 @@ public class AuthController {
     private AuthService authService;
     private Logger log= LoggerFactory.getLogger(AuthController.class);
 
-    @GetMapping("/login")
+    @GetMapping("/login")//✔
     public ResponseEntity<?> login(@RequestBody AuthDTO dto,
-                                   @RequestHeader(name = "Accept-Language",defaultValue = "ENG") Language language){
+                                   @RequestHeader(name = "Accept-Language",defaultValue = "EN") Language language){
         log.info("Authorization: {} " +dto);
         log.debug("Debug: {} " +dto);
         log.warn("Warning: {} " +dto);

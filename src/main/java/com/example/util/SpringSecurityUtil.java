@@ -21,4 +21,9 @@ public class SpringSecurityUtil {
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
         return user.getProfile().getId();
     }
+    public static String getCurrentUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        return user.getProfile().getEmail();
+    }
 }

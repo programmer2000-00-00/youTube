@@ -46,7 +46,7 @@ public class AuthService {
                 sb.append("<h1 style=\\\"text-align: center\\\">Salom Qalaysan</h1>");
                 String link = String.format("<a href=\"http://192.168.59.235/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(byEmail.getEmail()));
                 sb.append(link);
-                emailService.sendEmailMine(registrDTO.getEmail(), "Complite Registration", sb.toString());
+                emailService.sendEmailMine(registrDTO.getEmail(), "Complate Registration", sb.toString());
                 EmailEntity email=new EmailEntity();
                 email.setMessage("Salom Qalaysan");
                 email.setEmail(update.getEmail());

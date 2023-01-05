@@ -10,6 +10,7 @@ import com.example.mapper.UpdateProfileNameAndEmail;
 import com.example.repository.ProfileCustomRepository;
 import com.example.repository.ProfileRepository;
 import com.example.util.JwtTokenUtil;
+import com.example.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,9 +60,7 @@ public class ProfileService {
             return "Done";
         return "Wrong";
     }
-
-    public int createProfile(String email, ProfileDTO dto) {
-        ProfileEntity byEmail = profileRepository.findByEmail(email);
+    public int createProfile( ProfileDTO dto) {
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
         entity.setSurname(dto.getSurname());
@@ -69,9 +68,8 @@ public class ProfileService {
         entity.setPassword(dto.getPassword());
         entity.setRole(dto.getRole());
         entity.setStatus(ProfileStatus.ACTIVE);
-        entity.setPrtId(byEmail.getId());
+        entity.setPrtId(SpringSecurityUtil.getCurrentUserId());
         ProfileEntity save = profileRepository.save(entity);
-
         return 1;
     }
 
@@ -84,6 +82,6 @@ public class ProfileService {
             dto.setPassword(exists.getPassword());
             return dto;
         }
-        throw new ItemNotFoundException("bro dabdala qilliz");
+        throw new ItemNotFoundException("bro dabdala qildiz");
     }
 }

@@ -18,6 +18,6 @@ public class TagService {
         entity.setName(dto.getName());
         entity.setCreatedDate(dto.getCreatedDate());
         tagRepository.save(entity);
-        return "succes create tag!";
+        return "success create tag!";
     }
 }

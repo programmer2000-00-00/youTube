@@ -23,11 +23,6 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    @PutMapping("/example")
-    public String simple() {
-        return "ok";
-    }
-
     @GetMapping("/update/verification/email/{jtwToken}")
     public ResponseEntity<AuthDTO> emailVerification(@PathVariable("jtwToken") String jwt) {
         AuthDTO edit = profileService.edit(jwt);
@@ -37,12 +32,12 @@ public class ProfileController {
     public String emailVerificationEdit(@RequestBody AuthDTO authDTO){
         return  profileService.updateProfilePassword(authDTO.getEmail(), authDTO.getPassword());
     }
-    @PostMapping("/admin/create")
+    @PostMapping("/admin/create")//✔
     public HttpStatus createProfileByAdmin(@RequestBody ProfileDTO dto){
-        int result =  profileService.createProfile(dto.getEmail(), dto);
+        int result =  profileService.createProfile( dto);
         return result==1?HttpStatus.CREATED:HttpStatus.I_AM_A_TEAPOT;
     }
-    @GetMapping("/info/{id}")
+    @GetMapping("/info/{id}")//✔
     public ResponseEntity<ProfileDTO> myInfo(@PathVariable Integer id){
         return ResponseEntity.ok(profileService.getMyInfo(id));
     }

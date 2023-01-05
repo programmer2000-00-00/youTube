@@ -52,7 +52,9 @@ public class SecurityConfig {
         // authorization
         http.cors().disable().csrf().disable();
         http.authorizeHttpRequests()
-                .requestMatchers("/profile/admin/create").hasRole("ADMIN")
+//              .requestMatchers("/profile/admin/create").hasRole("ADMIN")
+                .requestMatchers("/profile/admin/create").permitAll()
+                .requestMatchers("/auth/registration").permitAll()
 //                .requestMatchers("/article/moderator/**").hasRole("MODERATOR")
 //                .requestMatchers("/article/last_eight/**").permitAll()
 //                .requestMatchers("/public/**").permitAll()
