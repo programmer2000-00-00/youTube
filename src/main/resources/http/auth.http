@@ -6,7 +6,7 @@ Content-Type: application/json
    "name":"Doniyor2",
    "surname": "Toshpulatov2",
     "email": "doniyorcoder2@gmail.com",
-    "password": "12345",
+     "password": "12345",
     "mainPhotoId": "3a138ceb-54a0-49c7-be4e-16a4e5b8fa90"
 }
 

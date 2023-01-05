@@ -19,7 +19,7 @@ public class ChannelEntity {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
-    @Column
+    @Column(unique = true)
     private String name;
 
     @Column(name = "photo_id")
@@ -30,7 +30,7 @@ public class ChannelEntity {
     @Column
     private String description;
     @Column
-    private ChannelStatus channelStatus;
+    private ChannelStatus channelStatus=ChannelStatus.ACTIVE;
     @Column(name = "banner_id")
     private String bannerId;
     @JoinColumn(name="banner_id", updatable = false, insertable = false)
