@@ -42,22 +42,6 @@ public class ProfileCustomRepository {
             builder.append( " and a.role =:role ");
             params.put("role", filter.getProfileRole());
         }
-//        if (filter.getVisible() != null) {
-//            builder.append(" where a.visible = ").append(filter.getVisible());
-//        } else {
-//            builder.append(" where a.visible = true ");
-//        }
-//        if (filter.getFromDate() != null && filter.getToDate() != null) {
-//            builder.append(" And cast(a.createdDate as date) between :fromDate and :toDate ");
-//            params.put("fromDate", filter.getFromDate());
-//            params.put("toDate", filter.getToDate());
-//        } else if (filter.getFromDate() != null) { // from
-//            builder.append(" And a.createdDate > :fromDate ");
-//            params.put("fromDate", filter.getFromDate().atStartOfDay()); // 2022-12-09 00:00:000
-//        } else if (filter.getToDate() != null) {
-//            builder.append(" And a.createdDate < :toDate ");
-//            params.put("toDate", filter.getToDate().atTime(LocalTime.MAX)); // 2022-12-09 23:59:59.999999999
-//        }
         Query query = entityManager.createQuery(builder.toString());
 
 
