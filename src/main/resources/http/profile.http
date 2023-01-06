@@ -1,5 +1,5 @@
 ###✔
-GET http://localhost:8080/auth/login
+POST http://localhost:8080/auth/login
 Accept-Language: UZ
 Content-Type: application/json
 
@@ -33,3 +33,7 @@ Content-Type: application/json
   "surname": "dfghj",
   "email": "jshobotayev@gmail.com"
 }
+
+###
+GET http://localhost:8080/profile/update/password
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzE5ODAzMzcsImVtYWlsIjoianNob2JvdGF5ZXZAZ21haWwuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2NzIwNjY3MzcsImlzcyI6InlvdXR1YmUgdGVzdCBwb3J0YWwifQ.HBH_NThJL7EN8OvrPDPwRLljU9NOVZzGwx6iYDg-LzNbhA_z3nD2fV4I0m677ZBOcP6aI6m4RIYP0nM2OAU6ug
