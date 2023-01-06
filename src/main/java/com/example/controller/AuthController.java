@@ -31,7 +31,7 @@ public class AuthController {
         AuthResponseDTO authResponseDTO = authService.login(dto,language);
         return ResponseEntity.ok(authResponseDTO);
     }
-    @PostMapping("/registration")
+    @PostMapping("/registration")//✔
     public ResponseEntity<?> registration(@RequestBody RegistrDTO registrDTO){
         log.info("Registration:{}"+registrDTO);
 

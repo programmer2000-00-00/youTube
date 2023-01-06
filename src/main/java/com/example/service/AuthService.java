@@ -85,6 +85,7 @@ public class AuthService {
         profileEntity.setStatus(ProfileStatus.NOT_ACTIVE);
         profileEntity.setRole(ProfileRole.ROLE_USER);
         profileEntity.setEmail(registrDTO.getEmail());
+        profileEntity.setAttachId(registrDTO.getMainPhotoId());
         profileEntity.setPassword(MD5Util1.encode(registrDTO.getPassword()));
         profileRepository.save(profileEntity);
 

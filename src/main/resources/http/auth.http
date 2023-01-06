@@ -5,9 +5,9 @@ Content-Type: application/json
 {
    "name":"Doniyor2",
    "surname": "Toshpulatov2",
-    "email": "doniyorcoder2@gmail.com",
-    "password": "12345",
-    "mainPhotoId": "3a138ceb-54a0-49c7-be4e-16a4e5b8fa90"
+    "email": "jshobotayev@gmail.com",
+    "password": "j20031027",
+    "mainPhotoId": "689067c3-0ec4-4329-8fa1-6f7c41a2c51f"
 }
 
 ### login
@@ -16,6 +16,6 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "email": "doniyorcoder1@gmail.com",
-  "password": "12345"
+  "email": "obotayev@gmail.com",
+  "password": "3434"
 }

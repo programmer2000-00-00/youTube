@@ -26,6 +26,11 @@ public class ProfileEntity {
 //id,name,surname,email,photo,role,status
     @Column(length = 200)
     private  String password;
+    @Column(name = "attach_id")
+    String attachId;
+    @OneToOne
+    @JoinColumn(name = "attach_id", insertable = false, updatable = false)
+    private AttachEntity attach;
 
     @Enumerated(value = EnumType.STRING)
     @Column

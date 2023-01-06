@@ -10,6 +10,7 @@ import com.example.mapper.UpdateProfileNameAndEmail;
 import com.example.repository.ProfileCustomRepository;
 import com.example.repository.ProfileRepository;
 import com.example.util.JwtTokenUtil;
+import com.example.util.MD5Util1;
 import com.example.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class ProfileService {
     }
 
     public String updateProfilePassword(String email, String newPassword) {
-        int result = profileRepository.updateProfilePassword(newPassword,email);
+        int result = profileRepository.updateProfilePassword(MD5Util1.encode(newPassword),email);
         if (result==1)
             return "Done";
         return "Wrong";
@@ -43,6 +44,8 @@ public class ProfileService {
     public AuthDTO forUpdateDTO(Integer profileId) {
 
         Optional<AuthDTO> byIdEmailAndPassword = profileRepository.findByIdEmailAndPassword(profileId);
+        String password = byIdEmailAndPassword.get().getPassword();
+        byIdEmailAndPassword.get().setPassword((password));
         return byIdEmailAndPassword.get();
     }
 

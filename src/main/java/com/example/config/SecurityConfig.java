@@ -38,9 +38,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable();
         http.authorizeHttpRequests()
-                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/attach/upload").permitAll()
                 .requestMatchers("/profile/update/password").permitAll()
+                .requestMatchers("/profile/update/password/detail/result").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

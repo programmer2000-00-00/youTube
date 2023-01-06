@@ -42,25 +42,24 @@ public class ProfileController {
         return ResponseEntity.ok(profileService.getMyInfo(id));
     }
 
-    @GetMapping("/update/password/")
+    @GetMapping("/update/password")//✔
     public ResponseEntity<AuthDTO> updatePassword() {
         AuthDTO profile = profileService.forUpdateDTO(SpringSecurityUtil.getCurrentUserId());
         return ResponseEntity.ok(profile);
     }
-    @PutMapping("/update/password/result")
+    @PutMapping("/update/password/result")//✔
     public String updateProfilePassword(@RequestBody AuthDTO profileDTO){
         return  profileService.updateProfilePassword(SpringSecurityUtil.getCurrentEntity().getEmail(), profileDTO.getPassword());
     }
-    @GetMapping("/update/password/detail/{profileId}")
+    @GetMapping("/update/password/detail/{profileId}")//✔
     public ResponseEntity<UpdateProfileNameAndEmail> updateDetail(@PathVariable Integer profileId) {
         UpdateProfileNameAndEmail profile = profileService.updateNameSurname(profileId);
         return ResponseEntity.ok(profile);
     }
 
-    @PutMapping("/update/password/detail/result")
-    public String updateProfilePasswordDetail(HttpServletRequest request,
-            @RequestBody UpdateProfileNameAndEmail profileDTO){
-        return  profileService.updateProfilePasswordDetail(profileDTO.getName(), profileDTO.getSurname(),JwtTokenUtil.getIdFromHeader(request));
+    @PutMapping("/update/password/detail/result")//✔
+    public String updateProfilePasswordDetail(@RequestBody UpdateProfileNameAndEmail profileDTO){
+        return  profileService.updateProfilePasswordDetail(profileDTO.getName(), profileDTO.getSurname(),SpringSecurityUtil.getCurrentUserEmail());
     }
 
 
