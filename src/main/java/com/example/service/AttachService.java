@@ -6,6 +6,12 @@ import com.example.exception.ItemNotFoundException;
 import com.example.repository.AttachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,11 +20,14 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -88,7 +97,7 @@ public class AttachService {
             if (byId.isEmpty()) {
                 throw new ItemNotFoundException("attach");
             }
-            File file = new File("attaches/" + byId.get().getPath() + "/" + byId.get().getOriginalName() + "." + byId.get().getExtension());
+            File file = new File("attaches/" + byId.get().getPath() + "/" +byId.get().getId()+"."+byId.get().getExtension());
             if (!file.exists()) {
                 throw new ItemNotFoundException("File");
             }
@@ -107,12 +116,59 @@ public class AttachService {
         }
         return null;
     }
+    public byte[] openGeneral(String fileName) {
+        byte[] data;
+        try {
+            AttachEntity attach = get(fileName);
+            Path file = Paths.get(attachFolder+getYmDString() + "/" + fileName + "." + attach.getExtension());
+            data = Files.readAllBytes(file);
+            return data;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
 
 
+    public AttachEntity get(String fileName) {
+        return attachRepository.findById(fileName).orElseThrow(() -> {
+            throw new ItemNotFoundException("Attach not found");
+        });
+    }
+    public Resource download(String fileName) {
+        try {
+            AttachEntity entity = get(fileName);
+            String path = entity.getPath() + "/" + fileName + "." + entity.getExtension();
+            Path file = Paths.get(attachFolder + path);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("Could not read the file!");
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("ERROR: " + e.getMessage());
+        }
+    }
 
+    public Page<AttachDTO> getList(Integer page, Integer size) {
+        Pageable paging = PageRequest.of(page-1,size);
 
+        Page<AttachEntity> entityPage = attachRepository.findAll(paging);
 
+        List<AttachEntity> entityList = entityPage.getContent();
 
+        List<AttachDTO> dtoList = new ArrayList<>();
+
+        for (AttachEntity attachEntity : entityList) {
+            AttachDTO attachDTO = toDTO(attachEntity);
+            dtoList.add(attachDTO);
+        }
+
+        Page<AttachDTO> attachDTOPage = new PageImpl<>(dtoList,paging, entityPage.getTotalElements());
+        return attachDTOPage;
+    }
 
 
 

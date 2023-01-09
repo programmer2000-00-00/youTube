@@ -6,3 +6,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="1.png"
 
 < C:\Users\jshob\OneDrive\Pictures\Saved Pictures\1.jpg
+### get by id
+GET http://localhost:8080/attach/open/883c3371-6026-4298-8600-ee3d08088e69
+### get by id
+GET http://localhost:8080/attach/open/883c3371-6026-4298-8600-ee3d08088e69
