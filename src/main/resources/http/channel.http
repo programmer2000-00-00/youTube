@@ -1,0 +1,12 @@
+### save
+POST localhost:8080/channel/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2NzI5MjYyNTMsImVtYWlsIjoiZG9uaXlvcmNvZGVyMkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjczMDEyNjUzLCJpc3MiOiJ5b3V0dWJlIHRlc3QgcG9ydGFsIn0.dFCTyHkjxV-j8IlDtrdHnxcdvjkrkxU5oN0j1FJk4YImBfHdb8437bzVDZfL6iMCUN6TJxewLr1UDJUAeWfryg
+
+{
+  "name": "Kulgu",
+  "photoId":"13189e83-f325-4c6f-8e73-efeecd9df5a1",
+  "description": "спорт",
+  "bannerId":"13189e83-f325-4c6f-8e73-efeecd9df5a1",
+  "profileId": "1"
+}
