@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.repository.core.support.IncompleteRepositoryCompositionException;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +21,11 @@ public class PlaylistEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "owner_id")
+    private Integer ownerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", updatable = false, insertable = false)
+    private ProfileEntity owner;
     @Column(name = "channel_id")
     private String channelId;
     @JoinColumn(name="channel_id", updatable = false, insertable = false)
@@ -33,9 +39,5 @@ public class PlaylistEntity {
     private PlaylistStatus status;
     @Column
     private Integer orderNumber;
-    @Column(name = "attach_id")
-    private  String attachId;
-    @OneToOne
-    @JoinColumn(name = "attach_id", updatable = false, insertable = false)
-    private AttachEntity attach;
+
 }

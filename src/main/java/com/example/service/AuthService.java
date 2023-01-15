@@ -44,7 +44,8 @@ public class AuthService {
 
                 StringBuilder sb = new StringBuilder();
                 sb.append("<h1 style=\\\"text-align: center\\\">Salom Qalaysan</h1>");
-                String link = String.format("<a href=\"http://192.168.59.235/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(byEmail.getEmail()));
+//                String link = String.format("<a href=\"http://192.168.59.235/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(byEmail.getEmail()));
+                String link ="<a href=\"https://kun.uz/\"> Click there</a>";
                 sb.append(link);
                 emailService.sendEmailMime(registrDTO.getEmail(), "Complite Registration", sb.toString());
                 EmailEntity email=new EmailEntity();
@@ -91,7 +92,8 @@ public class AuthService {
 
         StringBuilder sb = new StringBuilder();
         sb.append("<h1 style=\\\"text-align: center\\\">Click there for Registration</h1>");
-        String link = String.format("<a href=\"http://192.168.0.116:8080/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(entity.getEmail()));
+        String link ="<a href=\"https://kun.uz/\"> Click there</a>";
+//        String link = String.format("<a href=\"http://192.168.0.116:8080/auth/verification/email/%s\"> Click there</a>", JwtTokenUtil.encode(entity.getEmail()));
         sb.append(link);//tayyor bu uzgartirmangizla
         emailService.sendEmailMime(registrDTO.getEmail(), "Complite Registration", sb.toString());
         EmailEntity email=new EmailEntity();

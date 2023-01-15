@@ -20,12 +20,13 @@ public class ProfileDTO {
                       String name,
                       String surname,
                       String email,
-                      String password) {
+                      String password,String imageId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.imageId=imageId;
     }
 
     private Integer id;
@@ -36,8 +37,8 @@ public class ProfileDTO {
     private ProfileRole role;
     private LocalDateTime createdDate = LocalDateTime.now();
     private LocalDateTime updateDate;
-    /*private String imageId;
-    private String imagePath;*/
+    private String imageId;
+    private String imagePath;
 
     private ProfileStatus status;
 

@@ -29,6 +29,7 @@ public class ChannelEntity {
     private AttachEntity photo;
     @Column
     private String description;
+    @Enumerated(EnumType.STRING)
     @Column
     private ChannelStatus channelStatus;
     @Column(name = "banner_id")

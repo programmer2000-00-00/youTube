@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/catagory")
+@RequestMapping("/category")
 public class CatagoryController {
     @Autowired
     private CatagoryService catagoryService;
