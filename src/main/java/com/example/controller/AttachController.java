@@ -6,8 +6,11 @@ import com.example.entity.AttachEntity;
 import com.example.enums.ProfileRole;
 import com.example.exception.ItemNotFoundException;
 import com.example.service.AttachService;
+import com.example.util.JwtTokenUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,27 +25,43 @@ public class AttachController {
     private AttachService attachService;
 
     @PostMapping("/upload")
-    public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file) {//ishlaydi test buldi
         AttachDTO dto = attachService.createAttach(file);
         return ResponseEntity.ok().body(dto);
     }
-    @GetMapping(value = "/open/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] open(@PathVariable("id") String id) {
+    @GetMapping(value = "/open/{id}", produces = MediaType.IMAGE_PNG_VALUE)//ishlaydi test buldi
+    public ResponseEntity<byte[]> open(@PathVariable String id) {
         if (id != null && id.length() > 0) {
-            try {
-                return this.attachService.loadImage(id);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new byte[0];
-            }
+            return ResponseEntity.ok(this.attachService.loadImage(id));
         }
         return null;
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")//ishlaydi test buldi
     public ResponseEntity<?> deleteById(HttpServletRequest request,
                                         @PathVariable String id){
         Boolean response = attachService.delete(id);
         return ResponseEntity.ok(response);
     }
+    @GetMapping(value = "/open/{fileName}", produces = MediaType.ALL_VALUE)//ishlaydi test buldi
+    public byte[] openGeneral(@PathVariable String fileName) {
+        byte[] response = attachService.openGeneral(fileName);
+        return response;
+    }
+    @GetMapping(value = "/download/{fileName}", produces = MediaType.ALL_VALUE)//ishlaydi test buldi
+    public ResponseEntity<?> download(@PathVariable String fileName) {
+        Resource response = attachService.download(fileName);
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/pagination")
+    public ResponseEntity<?> getList(HttpServletRequest request,
+                                     @RequestParam Integer page,
+                                     @RequestParam Integer size){
+        JwtTokenUtil.getIdFromHeader(request, ProfileRole.ROLE_ADMIN);
+
+        Page<AttachDTO> response= attachService.getList(page, size);
+        return ResponseEntity.ok(response);
+
+    }
+
 }

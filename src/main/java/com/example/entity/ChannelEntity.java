@@ -19,7 +19,7 @@ public class ChannelEntity {
     @Id
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
-    @Column
+    @Column(unique = true)
     private String name;
 
     @Column(name = "photo_id")
@@ -29,9 +29,11 @@ public class ChannelEntity {
     private AttachEntity photo;
     @Column
     private String description;
+
     @Enumerated(EnumType.STRING)
     @Column
-    private ChannelStatus channelStatus;
+    private ChannelStatus channelStatus=ChannelStatus.ACTIVE;
+
     @Column(name = "banner_id")
     private String bannerId;
     @JoinColumn(name="banner_id", updatable = false, insertable = false)
@@ -41,6 +43,6 @@ public class ChannelEntity {
     @Column(name = "profile_id")
     private Integer profileId;
     @JoinColumn(name="profile_id", updatable = false, insertable = false)
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private ProfileEntity profile;
 }
